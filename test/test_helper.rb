@@ -1,8 +1,5 @@
 ENV["RAILS_ENV"] = "test"
 
-require "coveralls"
-Coveralls.wear!("rails")
-
 require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
 require 'rails/test_help'
 
@@ -111,8 +108,7 @@ class ActiveSupport::TestCase
   end
 
   def skip_jws_tests?
-    #skip if running in travis
-    !ENV["TRAVIS"].nil?
+    false
   end
 
   def skip_rest_schema_check?
