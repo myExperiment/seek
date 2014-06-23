@@ -43,12 +43,12 @@ SEEK::Application.configure do
   Seek::Config.default :pdf_conversion_enabled,true
   Seek::Config.default :forum_enabled,false
   Seek::Config.default :filestore_path,"filestore"
-  Seek::Config.default :biosamples_enabled, true
+  Seek::Config.default :biosamples_enabled, false
   Seek::Config.default :modelling_analysis_enabled,true
-  Seek::Config.default :organisms_enabled,true
+  Seek::Config.default :organisms_enabled,false
   Seek::Config.default :models_enabled,true
   Seek::Config.default :guide_box_enabled,true
-  Seek::Config.default :treatments_enabled,true
+  Seek::Config.default :treatments_enabled,false
   Seek::Config.default :factors_studied_enabled,true
   Seek::Config.default :experimental_conditions_enabled,true
   Seek::Config.default :tagging_enabled, true
