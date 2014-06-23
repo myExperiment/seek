@@ -63,6 +63,7 @@ SEEK::Application.configure do
   Seek::Config.default :modelling_analysis_type_base_uri,"http://www.mygrid.org.uk/ontology/JERMOntology#Model_analysis_type"
   Seek::Config.default :profile_select_by_default,true
   Seek::Config.default :programmes_enabled, false
+  Seek::Config.default :projectless_assets_allowed, true
 
   Seek::Config.default :header_tagline_text_enabled, true
 
