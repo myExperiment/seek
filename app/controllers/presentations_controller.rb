@@ -46,12 +46,7 @@ class PresentationsController < ApplicationController
   def new
     @presentation=Presentation.new
     respond_to do |format|
-      if User.logged_in_and_member?
-        format.html # new.html.erb
-      else
-        flash[:error] = "You are not authorized to upload new Presentations. Only members of known projects, institutions or work groups are allowed to create new content."
-        format.html { redirect_to presentations_path }
-      end
+      format.html # new.html.erb
     end
   end
 
