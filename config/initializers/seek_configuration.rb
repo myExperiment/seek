@@ -11,7 +11,7 @@ SEEK::Application.configure do
   Seek::Config.default :jerm_enabled,false
   Seek::Config.default :email_enabled,false
   Seek::Config.default :smtp, {:address => '', :port => '25', :domain => '', :authentication => :plain, :user_name => '', :password => '', :enable_starttls_auto=>false}
-  Seek::Config.default :noreply_sender, 'no-reply@sysmo-db.org'
+  Seek::Config.default :noreply_sender, 'no-reply@myexperiment.org'
   Seek::Config.default :solr_enabled,false
   Seek::Config.default :jws_enabled, true
   Seek::Config.default :jws_online_root,"https://jws.sysmo-db.org/"
@@ -53,7 +53,7 @@ SEEK::Application.configure do
   Seek::Config.default :experimental_conditions_enabled,true
   Seek::Config.default :tagging_enabled, true
   Seek::Config.default :workflows_enabled, true
-  Seek::Config.default :authorization_checks_enabled, true
+  Seek::Config.default :authorization_checks_enabled, false
   Seek::Config.default :documentation_enabled,true
   Seek::Config.default :assay_type_ontology_file, "JERM-RDFXML.owl"
   Seek::Config.default :technology_type_ontology_file, "JERM-RDFXML.owl"
@@ -62,7 +62,7 @@ SEEK::Application.configure do
   Seek::Config.default :technology_type_base_uri,"http://www.mygrid.org.uk/ontology/JERMOntology#Technology_type"
   Seek::Config.default :modelling_analysis_type_base_uri,"http://www.mygrid.org.uk/ontology/JERMOntology#Model_analysis_type"
   Seek::Config.default :profile_select_by_default,true
-  Seek::Config.default :programmes_enabled, true
+  Seek::Config.default :programmes_enabled, false
 
   Seek::Config.default :header_tagline_text_enabled, true
 
@@ -70,18 +70,18 @@ SEEK::Application.configure do
   Seek::Config.default :home_feeds_cache_timeout,2
 
 # Branding
-  Seek::Config.default :project_name,'SysMO'
-  Seek::Config.default :project_type,'Consortium'
-  Seek::Config.default :project_link,'http://www.sysmo.net'
+  Seek::Config.default :project_name,'myExperiment'
+  Seek::Config.default :project_type,'Project'
+  Seek::Config.default :project_link,'http://wiki.myexperiment.org'
 
-  Seek::Config.default :application_name,"SEEK"
-  Seek::Config.default :dm_project_name,"SysMO-DB"
-  Seek::Config.default :dm_project_link,"http://www.sysmo-db.org"
+  Seek::Config.default :application_name,'myExperiment'
+  Seek::Config.default :dm_project_name,'myExperiment'
+  Seek::Config.default :dm_project_link,'http://wiki.myexperiment.org'
   Seek::Config.default :header_image_enabled,true
-  Seek::Config.default :header_image_title, "SysMO-DB"
-  Seek::Config.default :header_image_link,"http://www.sysmo-db.org"
-  Seek::Config.default :header_image,'sysmo-db-logo_smaller.png'
-  Seek::Config.default :header_home_logo_image,'seek-logo-smaller.png'
+  Seek::Config.default :header_image_title, 'myExperiment'
+  Seek::Config.default :header_image_link,"http://www.myexperiment.org"
+  Seek::Config.default :header_image,'myexperiment_logo.png'
+  Seek::Config.default :header_home_logo_image,'myexperiment_logo.png'
   Seek::Config.default :copyright_addendum_enabled,false
   Seek::Config.default :copyright_addendum_content,'Additions copyright ...'
 
