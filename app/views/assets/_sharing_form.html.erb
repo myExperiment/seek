@@ -97,7 +97,7 @@
                 <%= policy_selection_options([Policy::VISIBLE,Policy::ACCESSIBLE,Policy::EDITING,Policy::MANAGING], @resource, your_project_access_type(@policy, @resource) || default_projects_access_type) -%>
               </select>
               <br/>
-              <span style="margin-left:10em;">... and all other <%= Seek::Config.project_name -%> members:</span>
+              <span style="margin-left:10em;">... and all other <%= t('project') %> members:</span>
               <% access_type_options = [Policy::NO_ACCESS,Policy::VISIBLE,Policy::ACCESSIBLE,Policy::EDITING] %>
           <% end %>
           <%= render :partial => "assets/sharing_form_access_type_dropdown",
