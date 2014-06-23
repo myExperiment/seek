@@ -87,6 +87,7 @@
                 <input type="radio" <%= 'checked="checked"' if @sharing_mode == Policy::ALL_SYSMO_USERS -%> id="sharing_scope_<%= Policy::ALL_SYSMO_USERS -%>" name="sharing[sharing_scope]" value="<%= Policy::ALL_SYSMO_USERS -%>" />
                 - All <%= Seek::Config.project_name -%> members:
               </label>
+              <% access_type_options = [Policy::VISIBLE,Policy::ACCESSIBLE,Policy::EDITING] %>
           <% else %>
               <label>
                 <input type="radio" <%= 'checked="checked"' if @sharing_mode == Policy::ALL_SYSMO_USERS -%> id="sharing_scope_<%= Policy::ALL_SYSMO_USERS -%>" name="sharing[sharing_scope]" value="<%= Policy::ALL_SYSMO_USERS -%>" />
@@ -97,9 +98,13 @@
               </select>
               <br/>
               <span style="margin-left:10em;">... and all other <%= Seek::Config.project_name -%> members:</span>
+              <% access_type_options = [Policy::NO_ACCESS,Policy::VISIBLE,Policy::ACCESSIBLE,Policy::EDITING] %>
           <% end %>
-          <%= render :partial => "assets/sharing_form_access_type_dropdown", :locals => { :access_type_selector_for_scope => Policy::ALL_SYSMO_USERS,
-                                                                                          :sharing_scope => Policy::ALL_SYSMO_USERS, :access_type => (@resource.respond_to?(:policy) && @resource.policy.try(:sharing_scope)==Policy::ALL_SYSMO_USERS ? @access_mode : default_consortium_access_type), :access_type_options=>[Policy::NO_ACCESS,Policy::VISIBLE,Policy::ACCESSIBLE,Policy::EDITING] } -%>
+          <%= render :partial => "assets/sharing_form_access_type_dropdown",
+                     :locals => { :access_type_selector_for_scope => Policy::ALL_SYSMO_USERS,
+                                  :sharing_scope => Policy::ALL_SYSMO_USERS,
+                                  :access_type => (@resource.respond_to?(:policy) && @resource.policy.try(:sharing_scope)==Policy::ALL_SYSMO_USERS ? @access_mode : default_consortium_access_type),
+                                  :access_type_options => access_type_options } -%>
           <%= additional_advanced_permissions_included @resource, Policy::ALL_SYSMO_USERS -%>
         </p>
 
