@@ -165,11 +165,15 @@ module Seek
           else
             project_map_table = ["#{self.name.underscore.pluralize}", 'projects'].sort.join('_')
             project_map_asset_id = "#{self.name.underscore}_id"
-            project_clause = projects.collect{|p| "#{project_map_table}.project_id = #{p.id}"}.join(" or ")
+            if projects.empty?
+              project_clause = nil
+            else
+              project_clause = "and (#{projects.collect{|p| "#{project_map_table}.project_id = #{p.id}"}.join(" or ")})"
+            end
             sql = "select asset_id,#{project_map_asset_id} from #{lookup_table_name}"
             sql << " inner join #{project_map_table}"
             sql << " on #{lookup_table_name}.asset_id = #{project_map_table}.#{project_map_asset_id}"
-            sql << " where #{lookup_table_name}.user_id = #{user_id} and (#{project_clause})"
+            sql << " where #{lookup_table_name}.user_id = #{user_id} #{project_clause}"
             sql << " and can_#{action}=#{ActiveRecord::Base.connection.quoted_true}"
             ids = ActiveRecord::Base.connection.select_all(sql).collect{|k| k["asset_id"]}
           end
