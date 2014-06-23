@@ -4,7 +4,7 @@
 <%# - disable_project_select - selection should only be available on 'new' action, but not on 'edit'; this parameter has a default of "false" -%>
 
 <%
-   allow_nil ||= false
+   allow_nil ||= Seek::Config.projectless_assets_allowed
    allow_all ||= Seek::Config.is_virtualliver
 
 
@@ -20,9 +20,6 @@
 
 %>
 
-
-<%= fancy_multiselect resource, :projects, :possibilities => possibilities, :selected => selected_project_ids, :required => (!allow_nil) %>
-
-
-
-
+<% unless (Seek::Config.projectless_assets_allowed && possibilities.empty?) %>
+    <%= fancy_multiselect resource, :projects, :possibilities => possibilities, :selected => selected_project_ids, :required => (!allow_nil) %>
+<% end %>
