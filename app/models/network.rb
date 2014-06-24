@@ -12,4 +12,8 @@ class Network < ActiveRecord::Base
 
   scope :default_order, order('title')
 
+  def self.user_creatable?
+    true
+  end
+
 end
