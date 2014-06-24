@@ -337,6 +337,8 @@ module ImagesHelper
         "famfamfam_silk/cog_go.png"
       when "workflow_avatar"
         "logos/taverna_logo.png"
+      when "network_avatar"
+        "project_64x64.png"
       when "sweep"
         "famfamfam_silk/chart_organisation.png"
       when "share"

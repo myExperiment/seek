@@ -1,0 +1,19 @@
+<%
+   members_to_display = 8
+%>
+
+<%= list_item_title resource %>
+
+<div class="list_item_whole_width">
+  <%= list_item_description resource.description %>
+</div>
+
+<div class="list_item_whole_width">
+  <h3>Members (<%= (count = resource.members.count) -%>)</h3>
+  <% resource.members.limit(8).each do |member| %>
+      <%= favouritable_icon(member, 60) -%>
+  <% end %>
+  <% if count > members_to_display %>
+      + <%= pluralize((count - members_to_display), 'other') -%>
+  <% end %>
+</div>
