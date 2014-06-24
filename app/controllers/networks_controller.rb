@@ -1,14 +1,8 @@
 class NetworksController < ApplicationController
-  # GET /networks
-  # GET /networks.json
-  def index
-    @networks = Network.all
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @networks }
-    end
-  end
+  include IndexPager
+
+  before_filter :find_assets, :only=>[:index]
 
   # GET /networks/1
   # GET /networks/1.json

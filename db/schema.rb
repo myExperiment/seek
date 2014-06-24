@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140624101008) do
+ActiveRecord::Schema.define(:version => 20140624130328) do
 
   create_table "activity_logs", :force => true do |t|
     t.string   "action"
@@ -789,8 +789,10 @@ ActiveRecord::Schema.define(:version => 20140624101008) do
     t.integer  "owner_id"
     t.string   "title"
     t.text     "description"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
+    t.string   "first_letter", :limit => 1
+    t.string   "uuid"
   end
 
   create_table "notifiee_infos", :force => true do |t|

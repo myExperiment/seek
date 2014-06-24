@@ -8,4 +8,8 @@ class Network < ActiveRecord::Base
   has_many :administrators, :through => :memberships, :source => :person, :conditions => ['network_memberships.accepted_at IS NOT NULL AND network_memberships.administrator']
   has_many :invited_people, :through => :memberships, :source => :person, :conditions => ['network_memberships.accepted_at IS NULL']
 
+  acts_as_yellow_pages
+
+  scope :default_order, order('title')
+
 end
