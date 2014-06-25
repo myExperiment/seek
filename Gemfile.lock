@@ -114,10 +114,10 @@ GIT
 
 GIT
   remote: git://github.com/myGrid/taverna-player.git
-  revision: b968095b28797b67d4242f98d7bec346b60ac0a3
+  revision: bf7512faafa819a8df6ae692f4ba8ce41a9fa3e4
   branch: list-inputs
   specs:
-    taverna-player (0.7.0)
+    taverna-player (0.8.0)
       coderay (~> 1.1)
       daemons (~> 1.1.9)
       delayed_job_active_record (~> 4.0)
@@ -128,7 +128,7 @@ GIT
       rails (~> 3.2.12)
       rails_autolink (~> 1.1.0)
       require_all (~> 1.3.1)
-      rubyzip (~> 0.9.9)
+      rubyzip (~> 1.1.4)
       t2-server (~> 1.1)
 
 GIT
@@ -414,7 +414,7 @@ GEM
       builder (>= 2.1.2)
     ruby-openid (2.5.0)
     ruby-prof (0.15.1)
-    rubyzip (0.9.9)
+    rubyzip (1.1.4)
     safe_yaml (1.0.3)
     savon (1.1.0)
       akami (~> 1.2.0)
@@ -577,7 +577,7 @@ DEPENDENCIES
   rmagick (= 2.13.2)
   ruby-openid
   ruby-prof
-  rubyzip (= 0.9.9)
+  rubyzip (~> 1.1.4)
   savon (= 1.1.0)
   search_biomodel (= 2.2.1)!
   simple-spreadsheet-extractor (~> 0.13.3)
