@@ -46,6 +46,12 @@
       <% end %>
   <% end %>
 </ul>
+<% if logged_in_and_registered? && !mine?(@person) %>
+    <%= form_tag :action => :request_friendship do %>
+        <%= submit_tag "Request Friendship", :disable_with => "Sending Request ..." -%>
+    <% end %>
+<% end %>
+
 
 <div class="show_basic">
   <div class="main_content_left_box">

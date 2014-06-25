@@ -80,6 +80,21 @@ class PeopleController < ApplicationController
     end
   end
 
+
+  def request_friendship
+    new_request = Friendship.new
+    new_request.person = @current_user.person
+    new_request.friend = params[:id]
+    new_request.status = 1
+    new_request.save!
+
+    respond_to do |format|
+      format.html { redirect_to(Person.find(params[:id]))}
+    end
+
+  end
+
+
   # GET /people/new
   # GET /people/new.xml
   def new    
@@ -333,6 +348,7 @@ class PeopleController < ApplicationController
       }
     end
   end
+
 
   private
   
