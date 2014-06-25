@@ -84,12 +84,12 @@
 
   <!-- Interactions -->
   <% interactions = processors.select { |proc| proc.type == 'interaction' } || [] %>
-  <div class="fold">
-    <div class="foldTitle">
-      Interactions (<%= interactions.count -%>)
-    </div>
-    <div class="foldContent" style="display: none;">
-      <% unless interactions.blank? -%>
+  <% unless interactions.blank? -%>
+    <div class="fold">
+      <div class="foldTitle">
+        Interactions (<%= interactions.count -%>)
+      </div>
+      <div class="foldContent" style="display: none;">
           <table class="simple" style="width: 100%;">
             <% interactions.each do |b| -%>
                 <tr>
@@ -105,20 +105,18 @@
                 </tr>
             <% end %>
           </table>
-      <% else %>
-          <p class="none_text">None</p>
-      <% end %>
+      </div>
     </div>
-  </div>
+  <% end %>
 
   <!-- R Scripts -->
   <% rscripts = processors.select { |proc| proc.type=='rshell' } || [] %>
-  <div class="fold">
-    <div class="foldTitle">
-      R Scripts (<%= rscripts.count -%>)
-    </div>
-    <div class="foldContent" style="display: none;">
-      <% unless rscripts.blank? -%>
+  <% unless rscripts.blank? -%>
+    <div class="fold">
+      <div class="foldTitle">
+        R Scripts (<%= rscripts.count -%>)
+      </div>
+      <div class="foldContent" style="display: none;">
           <table class="simple" style="width: 100%;">
             <% rscripts.each do |b| -%>
                 <tr>
@@ -140,11 +138,9 @@
                 </tr>
             <% end %>
           </table>
-      <% else %>
-          <p class="none_text">None</p>
-      <% end %>
+      </div>
     </div>
-  </div>
+  <% end %>
 
   <div class="fold">
     <div class="foldTitle">
