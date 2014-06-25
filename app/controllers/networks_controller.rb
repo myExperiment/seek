@@ -1,6 +1,7 @@
 class NetworksController < ApplicationController
 
   include IndexPager
+  include Seek::BreadCrumbs
 
   before_filter :find_assets, :only=>[:index]
 

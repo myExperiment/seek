@@ -1,0 +1,30 @@
+<h1>Manage Members</h1>
+
+<div class="show_basic">
+
+  <table>
+    <tr>
+      <th>Member</th>
+      <th></th>
+      <th></th>
+    </tr>
+
+    <% @network_memberships.each do |network_membership| %>
+        <tr>
+          <td><%= network_membership.person.name -%></td>
+          <td>
+            <% if network_membership.administrator %>
+                <%= link_to 'Remove Admin', network_member_path(@network, network_membership, :network_membership => {:administrator => false}), method: :put -%>
+            <% else %>
+                <%= link_to 'Make Admin', network_member_path(@network, network_membership, :network_membership => {:administrator => true}), method: :put -%>
+            <% end %>
+          </td>
+          <td><%= link_to 'Remove from network', network_member_path(@network, network_membership), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+    <% end %>
+  </table>
+
+  <br />
+
+  <%# link_to 'New Network membership', new_network_member_path %>
+</div>

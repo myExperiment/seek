@@ -1,8 +1,5 @@
 SEEK::Application.routes.draw do
 
-  resources :networks
-
-
   mount TavernaPlayer::Engine, :at => "/"
 
   resources :scales do
@@ -200,6 +197,10 @@ SEEK::Application.routes.draw do
         post :select
       end
     end
+  end
+
+  resources :networks do
+    resources :members, :controller => 'network_memberships' , :only => [:create, :destroy, :update, :index, :new]
   end
 
   ### ISA ###
