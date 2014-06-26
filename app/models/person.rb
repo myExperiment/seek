@@ -71,6 +71,11 @@ class Person < ActiveRecord::Base
 
   has_many :subscriptions,:dependent => :destroy
 
+  has_many :network_memberships
+  has_many :network_invitations, :class_name => 'NetworkMembership', :conditions => ['network_memberships.accepted_at IS NULL']
+  has_many :networks, :through => :network_memberships, :source => :network, :conditions => ['network_memberships.accepted_at IS NOT NULL']
+  has_many :owned_networks, :class_name => 'Network', :foreign_key => :owner_id
+
   before_create :set_default_subscriptions
   after_commit :queue_update_auth_table
 

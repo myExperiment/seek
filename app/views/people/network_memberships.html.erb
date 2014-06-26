@@ -1,0 +1,18 @@
+<h1>HEY!</h1>
+<div class="show_basic">
+  <% @invitations.each do |invitation| %>
+      <p>
+        <%= invitation.network.title %>
+        <%= link_to 'Accept', network_member_path(invitation.network, invitation, :network_membership => {:accept => true}), method: :put -%> |
+        <%= link_to 'Decline', network_member_path(invitation.network, invitation), method: :delete -%>
+      </p>
+  <% end %>
+
+  <% @owned_networks.each do |owned_network| %>
+      <%= link_to owned_network.title, owned_network %> (Owner)
+  <% end %>
+
+  <% @networks.each do |network| %>
+      <%= link_to network.title, network %>
+  <% end %>
+</div>

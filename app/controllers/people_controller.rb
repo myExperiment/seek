@@ -4,14 +4,14 @@ class PeopleController < ApplicationController
   include Seek::Publishing::PublishingCommon
   include Seek::Publishing::GatekeeperPublish
 
-  before_filter :find_and_authorize_requested_item, :only => [:show, :edit, :update, :destroy]
+  before_filter :find_and_authorize_requested_item, :only => [:show, :edit, :update, :destroy, :network_memberships]
   before_filter :current_user_exists,:only=>[:select,:userless_project_selected_ajax,:create,:new]
   before_filter :is_during_registration,:only=>[:select]
   before_filter :is_user_admin_auth,:only=>[:destroy,:new]
   before_filter :removed_params,:only=>[:update,:create]
   before_filter :administerable_by_user, :only => [:admin, :administer_update]
   before_filter :do_projects_belong_to_project_manager_projects,:only=>[:administer_update]
-  before_filter :editable_by_user, :only => [:edit, :update]
+  before_filter :editable_by_user, :only => [:edit, :update, :network_memberships]
 
   skip_before_filter :project_membership_required
   skip_before_filter :profile_for_login_required,:only=>[:select,:userless_project_selected_ajax,:create]
@@ -331,6 +331,16 @@ class PeopleController < ApplicationController
       format.json {
         render :json => {:status => 200, :people_list => people_list }
       }
+    end
+  end
+
+  def network_memberships
+    @invitations = @person.network_invitations.joins(:network)
+    @networks = @person.networks
+    @owned_networks = @person.owned_networks
+
+    respond_to do |format|
+      format.html
     end
   end
 
