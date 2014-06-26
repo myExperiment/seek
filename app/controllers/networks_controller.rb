@@ -6,7 +6,7 @@ class NetworksController < ApplicationController
   before_filter :find_assets, :only=>[:index]
   before_filter :find_network, :only => [:show, :edit, :update, :destroy, :leave]
   before_filter :admin_required, :only => [:edit, :update]
-  before_filter :owner_required
+  before_filter :owner_required, :only => [:destroy]
 
   # GET /networks/1
   # GET /networks/1.json
