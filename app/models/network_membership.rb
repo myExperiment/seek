@@ -5,6 +5,10 @@ class NetworkMembership < ActiveRecord::Base
   belongs_to :network
   belongs_to :inviter, :class_name => 'Person'
 
+  scope :accepted, -> { where('accepted_at IS NOT NULL') }
+  scope :invited, -> { where('accepted_at IS NULL') }
+  scope :administrators, -> { where(:administrator => true) }
+
   def accepted?
     !self.accepted_at.nil?
   end

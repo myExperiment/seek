@@ -1,6 +1,6 @@
-<h1>HEY!</h1>
+<h1><%= t('network') -%> Memberships</h1>
 <div class="show_basic">
-  <% @invitations.each do |invitation| %>
+  <% @person.network_memberships.invited.each do |invitation| %>
       <p>
         <%= invitation.network.title %>
         <%= link_to 'Accept', network_member_path(invitation.network, invitation, :network_membership => {:accept => true}), method: :put -%> |
@@ -8,11 +8,18 @@
       </p>
   <% end %>
 
-  <% @owned_networks.each do |owned_network| %>
-      <%= link_to owned_network.title, owned_network %> (Owner)
+  <% if @memberships.empty? %>
+      <span class="none_text">You are not a member of any <%= t('network').pluralize -%></span>
+  <% else %>
+      <% @memberships.each do |membership| %>
+          <%= link_to membership.network.title, membership.network %>
+          <% if membership.administrator %>
+              (Admin)
+          <% end %>
+          <% if membership.network.owner == @person %>
+              (Owner)
+          <% end %>
+      <% end %>
   <% end %>
 
-  <% @networks.each do |network| %>
-      <%= link_to network.title, network %>
-  <% end %>
 </div>

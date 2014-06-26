@@ -335,9 +335,7 @@ class PeopleController < ApplicationController
   end
 
   def network_memberships
-    @invitations = @person.network_invitations.joins(:network)
-    @networks = @person.networks
-    @owned_networks = @person.owned_networks
+    @memberships = @person.network_memberships.accepted.joins(:network)
 
     respond_to do |format|
       format.html
