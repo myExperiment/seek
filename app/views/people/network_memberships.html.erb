@@ -1,13 +1,19 @@
-<h1><%= t('network') -%> Memberships</h1>
+<h1>Manage <%= t('network') -%> Memberships</h1>
 <div class="show_basic">
-  <% @person.network_memberships.invited.each do |invitation| %>
-      <p>
-        <%= invitation.network.title %>
-        <%= link_to 'Accept', network_member_path(invitation.network, invitation, :network_membership => {:accept => true}), method: :put -%> |
-        <%= link_to 'Decline', network_member_path(invitation.network, invitation), method: :delete -%>
-      </p>
+  <h2>Invitations</h2>
+  <% if @person.network_memberships.invited.empty? %>
+      <span class="none_text">You have no pending invitations.</span>
+  <% else %>
+      <% @person.network_memberships.invited.each do |invitation| %>
+          <p>
+            <%= invitation.network.title %>
+            <%= link_to 'Accept', network_member_path(invitation.network, invitation, :network_membership => {:accept => true}), method: :put -%> |
+            <%= link_to 'Decline', network_member_path(invitation.network, invitation), method: :delete -%>
+          </p>
+      <% end %>
   <% end %>
 
+  <h2>Memberships</h2>
   <% if @memberships.empty? %>
       <span class="none_text">You are not a member of any <%= t('network').pluralize -%></span>
   <% else %>
