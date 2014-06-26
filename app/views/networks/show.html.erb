@@ -1,7 +1,7 @@
 <%= render :partial => "general/item_title",:locals=>{:item=>@network} %>
 
 <ul class="sectionIcons">
-  <% if @network.owner == current_user.person -%>
+  <% if @network.owner.user == current_user -%>
       <li><%= image_tag_for_key('edit', edit_network_path(@network), "Edit #{t('network')} Details", nil, "Edit #{t('network')} Details") -%></li>
       <li><%= image_tag_for_key('manage', network_members_path(@network), "Manage #{t('network')} Members", nil, "Manage #{t('network')} Members") -%></li>
   <% end -%>
