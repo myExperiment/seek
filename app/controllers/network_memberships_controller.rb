@@ -37,12 +37,18 @@ class NetworkMembershipsController < ApplicationController
   def update
     @network_membership = NetworkMembership.find(params[:id])
 
+    if @network_membership.accepted?
+      message = 'Membership updated.'
+    else
+      message = 'Invitation accepted.'
+    end
+
     respond_to do |format|
       if @network_membership.update_attributes(params[:network_membership])
-        format.html { redirect_to network_members_path(@network), notice: 'Membership was successfully updated.' }
+        format.html { redirect_to :back, notice: message }
         format.json { head :no_content }
       else
-        format.html { render action: "edit" }
+        format.html { redirect_to :back, error: 'Membership not updated.' }
         format.json { render json: @network_membership.errors, status: :unprocessable_entity }
       end
     end
@@ -51,10 +57,18 @@ class NetworkMembershipsController < ApplicationController
   # DELETE /network_memberships/1
   # DELETE /network_memberships/1.json
   def destroy
+    if @network_membership.accepted?
+      message = 'Membership removed.'
+    elsif current_user.person == @network_membership.person
+      message = 'Invitation declined.'
+    else
+      message = 'Invitation revoked.'
+    end
+
     @network_membership.destroy
 
     respond_to do |format|
-      format.html { redirect_to network_members_path(@network) }
+      format.html { redirect_to :back, notice: message }
       format.json { head :no_content }
     end
   end
