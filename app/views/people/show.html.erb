@@ -46,16 +46,9 @@
       <% end %>
   <% end %>
 </ul>
-<% if logged_in_and_registered? && !mine?(@person) %>
-    <% if current_user.person.is_awaiting_friendship_response?(@person.id) %>
-        <li><%= image_tag_for_key('destroy', remove_friendship_person_path(@person), nil, {:method=>:delete}, "Cancel Friendship Request") -%></li>
-    <% elsif current_user.person.is_friends_with?(@person.id) %>
-        You're already friends
-    <% else %>
-        <%= form_tag :action => :make_friendship_request do %>
-            <%= submit_tag "Request Friendship", :disable_with => "Sending Request ..." -%>
-        <% end %>
-    <% end %>
+
+<% if Seek::Config.friends_enabled %>
+    <%= render :partial => "friendship_options" %>
 <% end %>
 
 
