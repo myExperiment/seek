@@ -145,7 +145,8 @@ SEEK::Application.routes.draw do
       get :gatekeeper_decision_result
       get :waiting_approval_assets
       get :select
-      post :request_friendship
+      post :make_friendship_request
+      delete :remove_friendship
     end
     resources :projects,:institutions,:assays,:studies,:investigations,:models,:sops,:data_files,:presentations,:publications,:events,:only=>[:index]
     resources :avatars do
