@@ -16,4 +16,8 @@ class Network < ActiveRecord::Base
     true
   end
 
+  def related_people
+    members
+  end
+
 end

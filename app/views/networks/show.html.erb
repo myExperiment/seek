@@ -1,20 +1,38 @@
-<p id="notice"><%= notice %></p>
+<%= render :partial => "general/item_title",:locals=>{:item=>@network} %>
 
-<p>
-  <b>Owner:</b>
-  <%= @network.owner_id %>
-</p>
+<ul class="sectionIcons">
+  <% if @network.owner == current_user -%>
+      <li><%= image_tag_for_key('edit', edit_project_path(@project), "Edit #{t('project')} Details", nil, "Edit #{t('project')} Details") -%></li>
+  <% end -%>
+</ul>
 
-<p>
-  <b>Title:</b>
-  <%= @network.title %>
-</p>
+<div class="show_basic">
 
-<p>
-  <b>Description:</b>
-  <%= @network.description %>
-</p>
+  <div class="main_content_left_box">
 
+    <div class="box_about_actor">
+      <%= item_description @network.description -%>
+      <p>
+        <label>Owner:</label>
+        <%= link_to @network.owner.person.name, @network.owner -%>
+      </p>
+      <% if @network.administrators.any? %>
+          <p>
+            <label>Administrators:</label>
+            <% @network.administrators.each do |admin| %>
+                <%= link_to admin.name, admin -%>
+            <% end %>
+          </p>
+      <% end %>
+      <p>
+        <label>Members:</label>
+        <%= @network.members.count -%>
+      </p>
+    </div>
+  </div>
 
-<%= link_to 'Edit', edit_network_path(@network) %> |
-<%= link_to 'Back', networks_path %>
+  <div style="clear:both;">
+    <%= render :partial=>"general/items_related_to",:object => @network %>
+  </div>
+
+</div>
