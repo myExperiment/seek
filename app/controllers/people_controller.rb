@@ -4,6 +4,8 @@ class PeopleController < ApplicationController
   include Seek::Publishing::PublishingCommon
   include Seek::Publishing::GatekeeperPublish
 
+  before_filter :networks_enabled?, :only => [:network_memberships]
+
   before_filter :find_and_authorize_requested_item, :only => [:show, :edit, :update, :destroy, :network_memberships]
   before_filter :current_user_exists,:only=>[:select,:userless_project_selected_ajax,:create,:new]
   before_filter :is_during_registration,:only=>[:select]
