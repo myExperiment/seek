@@ -11,6 +11,7 @@ class NetworkMembership < ActiveRecord::Base
 
   validates :person_id, :presence => true, :uniqueness => { :scope => :network_id, :message => 'Invitation already sent.' }
   validates :network_id, :presence => true
+  validates :inviter_id, :presence => true
   validate :not_owner
 
   def accepted?
