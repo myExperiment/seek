@@ -109,7 +109,7 @@ class NetworkMembershipsController < ApplicationController
   end
 
   def admin_required
-    unless @network.admin?(current_user) || @network.owner?(current_user)
+    unless @network.admin?(current_user)
       respond_to do |format|
         format.html { redirect_to network_url(@network), error: "You are not authorized to perform this action." }
       end

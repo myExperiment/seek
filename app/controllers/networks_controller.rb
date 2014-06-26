@@ -80,6 +80,8 @@ class NetworksController < ApplicationController
     if @network_membership
       @network_membership.destroy
       flash[:notice] = "You have cancelled your membership."
+    elsif @network.owner?(current_user)
+      flash[:error] = "You cannot leave a network which you own."
     else
       flash[:error] = "You are not a member of this network."
     end
@@ -97,7 +99,7 @@ class NetworksController < ApplicationController
   end
 
   def admin_required
-    unless @network.admin?(current_user) || @network.owner?(current_user)
+    unless @network.admin?(current_user)
       respond_to do |format|
         format.html { redirect_to network_url(@network), error: "Only administrators may perform this action." }
       end
