@@ -20,15 +20,15 @@ class Network < ActiveRecord::Base
   end
 
   def member?(person)
-    members.include?(person.is_a?(Person) ? person : person.person)
+    !person.nil? && members.include?(person.is_a?(Person) ? person : person.person)
   end
 
   def admin?(person)
-    administrators.include?(person.is_a?(Person) ? person : person.person)
+    !person.nil? && administrators.include?(person.is_a?(Person) ? person : person.person)
   end
 
   def owner?(person)
-    owner == (person.is_a?(Person) ? person : person.person)
+    !person.nil? && (owner == (person.is_a?(Person) ? person : person.person))
   end
 
 end
