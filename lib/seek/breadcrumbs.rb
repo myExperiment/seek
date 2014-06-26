@@ -21,10 +21,19 @@ module Seek
         add_index_breadcrumb @avatar_for.pluralize.downcase
         add_show_breadcrumb @avatar_owner_instance
         add_edit_breadcrumb @avatar_owner_instance
+      elsif controller_name == 'network_memberships'
+        add_index_breadcrumb "networks"
+        add_show_breadcrumb @network
       end
 
       #Index
-      controller_name == 'studied_factors' ? add_index_breadcrumb(controller_name, 'Factors studied Index') : add_index_breadcrumb(controller_name)
+      if controller_name == 'studied_factors'
+        add_index_breadcrumb(controller_name, 'Factors studied Index')
+      elsif controller_name == 'network_memberships'
+        add_index_breadcrumb(controller_name, 'Members')
+      else
+        add_index_breadcrumb(controller_name)
+      end
       resource = eval("@"+controller_name.singularize) || try_block{controller_name.singularize.camelize.constantize.find_by_id(params[:id])}
 
       add_show_breadcrumb resource if (resource && resource.respond_to?(:new_record?) && !resource.new_record?)

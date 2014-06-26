@@ -1,9 +1,9 @@
 class NetworkMembershipsController < ApplicationController
 
-  include Seek::BreadCrumbs
-
   before_filter :find_network
   before_filter :find_membership, :only => [:update, :destroy]
+
+  include Seek::BreadCrumbs
 
   # GET /network_memberships
   # GET /network_memberships.json
