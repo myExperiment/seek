@@ -1,5 +1,7 @@
 class NetworkMembershipsController < ApplicationController
 
+  before_filter :networks_enabled?
+
   before_filter :find_network
   before_filter :find_membership, :only => [:update, :destroy]
   before_filter :admin_required, :only => [:create, :index, :mass_invite]

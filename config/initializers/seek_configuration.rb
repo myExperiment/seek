@@ -64,6 +64,8 @@ SEEK::Application.configure do
   Seek::Config.default :profile_select_by_default,true
   Seek::Config.default :programmes_enabled, false
 
+  Seek::Config.default :networks_enabled, true
+
   Seek::Config.default :header_tagline_text_enabled, true
 
 #time in minutes that the feeds on the front page are cached for

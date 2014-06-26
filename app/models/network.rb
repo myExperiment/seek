@@ -12,7 +12,7 @@ class Network < ActiveRecord::Base
   scope :default_order, order('title')
 
   def self.user_creatable?
-    true
+    Seek::Config.networks_enabled
   end
 
   def related_people

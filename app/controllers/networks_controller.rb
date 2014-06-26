@@ -3,6 +3,8 @@ class NetworksController < ApplicationController
   include IndexPager
   include Seek::BreadCrumbs
 
+  before_filter :networks_enabled?
+
   before_filter :find_assets, :only=>[:index]
   before_filter :find_network, :only => [:show, :edit, :update, :destroy, :leave]
   before_filter :admin_required, :only => [:edit, :update]
