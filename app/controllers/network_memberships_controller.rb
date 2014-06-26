@@ -29,7 +29,7 @@ class NetworkMembershipsController < ApplicationController
         format.html { redirect_to network_members_path(@network), notice: 'Membership invitation has been sent.' }
         format.json { render json: @network_membership, status: :created, location: @network_membership }
       else
-        format.html { render action: "new" }
+        format.html { render action: "index"}
         format.json { render json: @network_membership.errors, status: :unprocessable_entity }
       end
     end

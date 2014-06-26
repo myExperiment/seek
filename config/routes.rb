@@ -201,7 +201,7 @@ SEEK::Application.routes.draw do
   end
 
   resources :networks do
-    resources :members, :controller => 'network_memberships' , :only => [:create, :destroy, :update, :index, :new] do
+    resources :members, :controller => 'network_memberships' , :only => [:create, :destroy, :update, :index] do
       collection do
         post :mass_invite
       end
