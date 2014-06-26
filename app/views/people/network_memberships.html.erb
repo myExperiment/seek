@@ -4,13 +4,22 @@
   <% if @person.network_memberships.invited.empty? %>
       <span class="none_text">You have no pending invitations.</span>
   <% else %>
-      <% @person.network_memberships.invited.each do |invitation| %>
-          <p>
-            <%= invitation.network.title %>
-            <%= link_to 'Accept', network_member_path(invitation.network, invitation, :network_membership => {:accept => true}), method: :put -%> |
-            <%= link_to 'Decline', network_member_path(invitation.network, invitation), method: :delete -%>
-          </p>
-      <% end %>
+      <table>
+        <tr>
+          <th>Network</th>
+          <th>Invited by</th>
+          <th></th>
+          <th></th>
+        </tr>
+        <% @person.network_memberships.invited.each do |invitation| %>
+            <tr>
+              <td><%= link_to invitation.network.title, invitation.network %></td>
+              <td><%= link_to invitation.inviter.name, invitation.inviter %></td>
+              <td><%= link_to 'Accept', network_member_path(invitation.network, invitation, :network_membership => {:accept => true}), method: :put -%></td>
+              <td><%= link_to 'Decline', network_member_path(invitation.network, invitation), method: :delete -%></td>
+            </tr>
+        <% end %>
+      </table>
   <% end %>
 
   <h2>Memberships</h2>
