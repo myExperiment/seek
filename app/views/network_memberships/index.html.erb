@@ -2,27 +2,33 @@
 
 <div class="show_basic">
 
-  <table>
-    <tr>
-      <th>Member</th>
-      <th></th>
-      <th></th>
-    </tr>
-
-    <% @network_memberships.each do |network_membership| %>
+  <% if @network_memberships.empty? %>
+    <span class="none_text">
+      This network currently has no members.
+    </span>
+  <% else %>
+      <table>
         <tr>
-          <td><%= network_membership.person.name -%></td>
-          <td>
-            <% if network_membership.administrator %>
-                <%= link_to 'Remove Admin', network_member_path(@network, network_membership, :network_membership => {:administrator => false}), method: :put -%>
-            <% else %>
-                <%= link_to 'Make Admin', network_member_path(@network, network_membership, :network_membership => {:administrator => true}), method: :put -%>
-            <% end %>
-          </td>
-          <td><%= link_to 'Remove from network', network_member_path(@network, network_membership), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <th>Member</th>
+          <th></th>
+          <th></th>
         </tr>
-    <% end %>
-  </table>
+
+        <% @network_memberships.each do |network_membership| %>
+            <tr>
+              <td><%= network_membership.person.name -%></td>
+              <td>
+                <% if network_membership.administrator %>
+                    <%= link_to 'Remove Admin', network_member_path(@network, network_membership, :network_membership => {:administrator => false}), method: :put -%>
+                <% else %>
+                    <%= link_to 'Make Admin', network_member_path(@network, network_membership, :network_membership => {:administrator => true}), method: :put -%>
+                <% end %>
+              </td>
+              <td><%= link_to 'Remove from network', network_member_path(@network, network_membership), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            </tr>
+        <% end %>
+      </table>
+  <% end %>
 
   <br />
 
