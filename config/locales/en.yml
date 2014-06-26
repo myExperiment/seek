@@ -44,6 +44,9 @@ en:
   #Workflow
   workflow: "Workflow"
 
+  #Network
+  network: "Network"
+
   scale: "Scale"
 
   menu:
