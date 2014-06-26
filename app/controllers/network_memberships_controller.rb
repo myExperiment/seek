@@ -8,7 +8,7 @@ class NetworkMembershipsController < ApplicationController
   # GET /network_memberships
   # GET /network_memberships.json
   def index
-    @network_memberships = NetworkMembership.all
+    @network_memberships = @network.memberships
 
     respond_to do |format|
       format.html # index.html.erb
@@ -20,6 +20,7 @@ class NetworkMembershipsController < ApplicationController
   # POST /network_memberships.json
   def create
     @network_membership = NetworkMembership.new(params[:network_membership])
+    @network_membership.network = @network
 
     respond_to do |format|
       if @network_membership.save
