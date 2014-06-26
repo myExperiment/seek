@@ -1,6 +1,7 @@
-<h1>Editing network</h1>
+<h1>Editing <%= t('network') -%></h1>
 
-<%= render 'form' %>
+<div class="show_basic">
+  <%= render 'form' %>
 
-<%= link_to 'Show', @network %> |
-<%= link_to 'Back', networks_path %>
+  <%= link_to 'Back', networks_path %>
+</div>
