@@ -2,7 +2,7 @@ class NetworkMembershipsController < ApplicationController
 
   before_filter :find_network
   before_filter :find_membership, :only => [:update, :destroy]
-  before_filter :admin_required, :only => [:create, :index]
+  before_filter :admin_required, :only => [:create, :index, :mass_invite]
   before_filter :admin_or_membership_required, :only => [:update, :destroy]
 
   include Seek::BreadCrumbs
@@ -81,7 +81,16 @@ class NetworkMembershipsController < ApplicationController
       NetworkMembership.new(:network_id => @network.id, :person_id => id.to_i, :inviter_id => current_user.person.id)
     end
 
-    num = memberships.count { |m| m.save}
+    num = 0
+    @errors = []
+
+    memberships.each do |membership|
+      if membership.save
+        num += 1
+      else
+        @errors << membership.errors
+      end
+    end
 
     respond_to do |format|
       format.html { redirect_to network_members_path(@network), notice: "#{num} invitations sent." }

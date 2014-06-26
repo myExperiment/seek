@@ -9,6 +9,10 @@ class NetworkMembership < ActiveRecord::Base
   scope :invited, -> { where('accepted_at IS NULL') }
   scope :administrators, -> { where(:administrator => true) }
 
+  validates :person_id, :presence => true, :uniqueness => { :scope => :network_id, :message => 'Invitation already sent.' }
+  validates :network_id, :presence => true
+  validate :not_owner
+
   def accepted?
     !self.accepted_at.nil?
   end
@@ -24,6 +28,17 @@ class NetworkMembership < ActiveRecord::Base
   def accept
     self.accepted_at = Time.now
     accepted?
+  end
+
+  private
+
+  def not_owner
+    if network.owner?(self.person)
+      self.errors[:base] << "#{self.person.name} is the #{t('network')} owner"
+      false
+    else
+      true
+    end
   end
 
 end
