@@ -4,12 +4,13 @@ class NetworksController < ApplicationController
   include Seek::BreadCrumbs
 
   before_filter :find_assets, :only=>[:index]
+  before_filter :find_network, :only => [:show, :edit, :update, :destroy, :leave]
+  before_filter :admin_required, :only => [:edit, :update]
+  before_filter :owner_required
 
   # GET /networks/1
   # GET /networks/1.json
   def show
-    @network = Network.find(params[:id])
-
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @network }
@@ -29,7 +30,6 @@ class NetworksController < ApplicationController
 
   # GET /networks/1/edit
   def edit
-    @network = Network.find(params[:id])
   end
 
   # POST /networks
@@ -52,8 +52,6 @@ class NetworksController < ApplicationController
   # PUT /networks/1
   # PUT /networks/1.json
   def update
-    @network = Network.find(params[:id])
-
     respond_to do |format|
       if @network.update_attributes(params[:network])
         format.html { redirect_to @network, notice: "#{t('network')} was successfully updated." }
@@ -68,7 +66,6 @@ class NetworksController < ApplicationController
   # DELETE /networks/1
   # DELETE /networks/1.json
   def destroy
-    @network = Network.find(params[:id])
     @network.destroy
 
     respond_to do |format|
@@ -76,4 +73,43 @@ class NetworksController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def leave
+    @network_membership = @network.memberships.where(:person_id => current_user.person_id).first
+
+    if @network_membership
+      @network_membership.destroy
+      flash[:notice] = "You have cancelled your membership."
+    else
+      flash[:error] = "You are not a member of this network."
+    end
+
+    respond_to do |format|
+      format.html { redirect_to network_url(@network) }
+      format.json { head :no_content }
+    end
+  end
+
+  private
+
+  def find_network
+    @network = Network.find(params[:id])
+  end
+
+  def admin_required
+    unless @network.admin?(current_user) || @network.owner?(current_user)
+      respond_to do |format|
+        format.html { redirect_to network_url(@network), error: "Only administrators may perform this action." }
+      end
+    end
+  end
+
+  def owner_required
+    unless @network.owner?(current_user)
+      respond_to do |format|
+        format.html { redirect_to network_url(@network), error: "Only the network owner may perform this action." }
+      end
+    end
+  end
+
 end

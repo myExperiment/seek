@@ -2,6 +2,8 @@ class NetworkMembershipsController < ApplicationController
 
   before_filter :find_network
   before_filter :find_membership, :only => [:update, :destroy]
+  before_filter :admin_required, :only => [:create, :index]
+  before_filter :admin_or_membership_required, :only => [:update, :destroy]
 
   include Seek::BreadCrumbs
 
@@ -83,4 +85,19 @@ class NetworkMembershipsController < ApplicationController
   def find_membership
     @network_membership = NetworkMembership.find(params[:id])
   end
+
+  def admin_required
+    unless @network.admin?(current_user) || @network.owner?(current_user)
+      respond_to do |format|
+        format.html { redirect_to network_url(@network), error: "You are not authorized to perform this action." }
+      end
+    end
+  end
+
+  def admin_or_membership_required
+    unless @network_membership.person.user == current_user
+      admin_required
+    end
+  end
+
 end

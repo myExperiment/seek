@@ -202,6 +202,9 @@ SEEK::Application.routes.draw do
 
   resources :networks do
     resources :members, :controller => 'network_memberships' , :only => [:create, :destroy, :update, :index, :new]
+    member do
+      delete :leave
+    end
   end
 
   ### ISA ###
