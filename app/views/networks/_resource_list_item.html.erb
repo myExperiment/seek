@@ -9,8 +9,8 @@
 </div>
 
 <div class="list_item_whole_width">
-  <h3>Members (<%= (count = resource.members.count) -%>)</h3>
-  <% resource.members.limit(8).each do |member| %>
+  <h3>Members (<%= (count = resource.members.count + 1) -%>)</h3>
+  <% (resource.members.limit(members_to_display - 1) + [resource.owner]).each do |member| %>
       <%= favouritable_icon(member, 60) -%>
   <% end %>
   <% if count > members_to_display %>

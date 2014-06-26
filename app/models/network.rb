@@ -16,7 +16,7 @@ class Network < ActiveRecord::Base
   end
 
   def related_people
-    members
+    members + [owner]
   end
 
   def member?(person)
