@@ -40,7 +40,7 @@ class NetworksController < ApplicationController
 
     respond_to do |format|
       if @network.save
-        format.html { redirect_to @network, notice: 'Network was successfully created.' }
+        format.html { redirect_to @network, notice: "#{t('network')} was successfully created." }
         format.json { render json: @network, status: :created, location: @network }
       else
         format.html { render action: "new" }
@@ -56,7 +56,7 @@ class NetworksController < ApplicationController
 
     respond_to do |format|
       if @network.update_attributes(params[:network])
-        format.html { redirect_to @network, notice: 'Network was successfully updated.' }
+        format.html { redirect_to @network, notice: "#{t('network')} was successfully updated." }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
