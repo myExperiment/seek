@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140625140224) do
+ActiveRecord::Schema.define(:version => 20140626130847) do
 
   create_table "activity_logs", :force => true do |t|
     t.string   "action"
@@ -519,7 +519,7 @@ ActiveRecord::Schema.define(:version => 20140625140224) do
 
   create_table "friendships", :force => true do |t|
     t.integer  "person_id"
-    t.integer  "friend"
+    t.integer  "friend_id"
     t.integer  "status"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
