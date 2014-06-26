@@ -1,7 +1,11 @@
+<%= javascript_include_tag 'projects' %>
+<%= stylesheet_link_tag 'projects' %>
+
 <h1>Manage Members</h1>
 
 <div class="show_basic">
 
+  <h2>Members</h2>
   <% if @network_memberships.empty? %>
     <span class="none_text">
       This network currently has no members.
@@ -18,19 +22,59 @@
             <tr>
               <td><%= network_membership.person.name -%></td>
               <td>
-                <% if network_membership.administrator %>
-                    <%= link_to 'Remove Admin', network_member_path(@network, network_membership, :network_membership => {:administrator => false}), method: :put -%>
+                <% if network_membership.accepted? %>
+                    <% if network_membership.administrator %>
+                        <%= link_to 'Remove Admin', network_member_path(@network, network_membership, :network_membership => {:administrator => false}), method: :put -%>
+                    <% else %>
+                        <%= link_to 'Make Admin', network_member_path(@network, network_membership, :network_membership => {:administrator => true}), method: :put -%>
+                    <% end %>
                 <% else %>
-                    <%= link_to 'Make Admin', network_member_path(@network, network_membership, :network_membership => {:administrator => true}), method: :put -%>
+                    <span class="none_text">Invitation pending</span>
                 <% end %>
               </td>
-              <td><%= link_to 'Remove from network', network_member_path(@network, network_membership), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+              <td><%= link_to network_membership.accepted? ? 'Remove from network' : 'Cancel invitation', network_member_path(@network, network_membership), method: :delete, data: { confirm: 'Are you sure?' } %></td>
             </tr>
         <% end %>
       </table>
   <% end %>
 
-  <br />
+  <h2>Invite New Members</h2>
 
-  <%# link_to 'New Network membership', new_network_member_path %>
+  <%= form_tag mass_invite_network_members_path(@network), :method => :post do %>
+      <table id="facebook">
+        <tr>
+          <td>
+            <div tabindex="-1" id="ids" class="clearfix tokenizer" onclick="$('person_autocomplete_input').focus();" style="width: 400px;">
+              <span class="tokenizer_stretcher">^_^</span><span class="tab_stop"><input type="text" id="people_hidden_input" tabindex="-1"></span>
+
+              <div id="person_autocomplete_display" class="tokenizer_input">
+                <input type="text" size="1" tabindex="" id="person_autocomplete_input"/>
+              </div>
+            </div>
+            <div id="person_autocomplete_populate" class="clearfix autocomplete typeahead_list" style="width: 403px; height: auto; overflow-y: hidden;display:none">
+              <div class="typeahead_message">Type the name of a friend, friend list, or email address</div>
+            </div>
+          </td>
+        </tr>
+      </table>
+      <%= submit_tag %>
+  <% end %>
+
+  <script type="application/javascript">
+      var suggestion_list = <%= Person.get_all_as_json.html_safe -%>;
+      var prepopulate_with = [];
+
+      var person_autocompleter = new Autocompleter.LocalAdvanced(
+              'person_autocompleter', 'person_autocomplete_input', 'person_autocomplete_display', 'person_autocomplete_populate', suggestion_list, prepopulate_with, {
+                  frequency: 0.1,
+                  updateElement: addAction,
+                  search_field: "name",
+                  hint_field: "email",
+                  id_field: "id",
+                  validation_type: "only_suggested"
+              });
+      var hidden_input = new HiddenInput('people_hidden_input', person_autocompleter);
+
+      autocompleters["person_autocompleter"] = person_autocompleter;
+  </script>
 </div>

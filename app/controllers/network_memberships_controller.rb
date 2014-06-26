@@ -76,6 +76,19 @@ class NetworkMembershipsController < ApplicationController
     end
   end
 
+  def mass_invite
+    memberships = params[:person_autocompleter_selected_ids].map do |id|
+      NetworkMembership.new(:network_id => @network.id, :person_id => id.to_i, :inviter_id => current_user.person.id)
+    end
+
+    num = memberships.count { |m| m.save}
+
+    respond_to do |format|
+      format.html { redirect_to network_members_path(@network), notice: "#{num} invitations sent." }
+      format.json { head :no_content }
+    end
+  end
+
   private
 
   def find_network
