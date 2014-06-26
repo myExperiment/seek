@@ -11,6 +11,9 @@
       <% end %>
 
       <%= link_to_function(current_person.name, :onclick => "toggleDynamicMenu('my_profile_menu');") %>
+      <% if Seek::Config.networks_enabled && (memberships_count = current_person.network_memberships.invited.count) > 0 %>
+          (<%= memberships_count -%>)
+      <% end %>
 
       <%= image_tag(icon_filename_for_key('arrow_down_small'), :onclick => "toggleDynamicMenu('my_profile_menu');") %>
 
@@ -22,6 +25,15 @@
         <li class='dynamic_menu_li' onclick="javascript:location.href='<%= edit_person_path(current_person) -%>';">Edit
           profile
         </li>
+        <% if Seek::Config.networks_enabled %>
+            <li class='dynamic_menu_li' onclick="javascript:location.href='<%= network_memberships_person_path(current_person) -%>';">
+              <% if memberships_count > 0 %>
+                  <strong>Your Networks (<%= memberships_count -%>)</strong>
+              <% else %>
+                  Your Networks
+              <% end %>
+            </li>
+        <% end %>
         <li class='dynamic_menu_li' onclick="javascript:location.href='<%= edit_user_path(current_user) -%>';">Change password
         </li>
 
