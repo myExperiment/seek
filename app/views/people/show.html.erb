@@ -58,7 +58,9 @@
       <%= render :partial=>"profile_information" -%>
 
 
-
+      <% if Seek::Config.friends_enabled && mine?(@person)%>
+          <%= render :partial => "friend_requests" %>
+      <% end %>
     </div>
   </div>
   <div class="main_content_right_box">
