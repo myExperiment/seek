@@ -83,15 +83,16 @@ class PeopleController < ApplicationController
   def remove_friendship
     friendship = Friendship.where(:person_id => current_user.person.id, :friend_id => params[:id]) + Friendship.where(:person_id => params[:id], :friend_id => current_user.person.id)
     Friendship.delete(friendship)
+    flash[:notice] = "You are no longer friends with this person."
     respond_to do |format|
-      format.html { redirect_to(Person.find(params[:id]))}
+      format.html { redirect_to(:back)}
     end
   end
 
   def accept_friendship_request
     friendship = Friendship.where(:person_id => params[:id], :friend_id => current_user.person.id).first
     friendship.accept_request
-    flash[:notice] = 'You are now friends with this person'
+    flash[:notice] = "You are now friends with #{Person.find_by_id(params[:id]).name}"
     respond_to do |format|
       format.html { redirect_to(Person.find(params[:id]))}
     end
@@ -103,11 +104,10 @@ class PeopleController < ApplicationController
     new_request.friend_id = params[:id]
     new_request.status = 1
     new_request.save!
-    flash[:notice] = "A friend request has been sent"
+    flash[:notice] = "A friend request has been sent to #{Person.find_by_id(params[:id]).name}"
     respond_to do |format|
       format.html { redirect_to(Person.find(params[:id]))}
     end
-
   end
 
 
