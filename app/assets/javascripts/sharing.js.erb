@@ -826,6 +826,37 @@ function addIndividualPeople() {
 }
 
 
+function addFriend(id, name) {
+    alert(name);
+
+    var selIDs = id
+    if(selIDs == "") {
+        // no people to add
+        alert("Please choose people to share with!");
+        return(false);
+    }
+    else {
+
+        // some people to add - known that don't have duplicates
+        // within the new list, but some entries in the new list
+        // may replicate those in the main member list: check this
+        var duplicates_found = false;
+
+        for(var i = 0; i < selIDs.length; i++) {
+            id = parseInt(selIDs[i]);
+            access_type = parseInt($('friend_access_type_select').options[$('friend_access_type_select').selectedIndex].value);
+            person_name = name;
+            addContributor('Person', person_name, id, access_type);
+        }
+
+
+
+        return(true);
+    }
+}
+
+
+
 // ***************  Whitelist / Blacklist  *****************
 
 // will create new whitelist/blacklist (based on 'grp_name' parameter) and
