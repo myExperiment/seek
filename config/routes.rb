@@ -147,6 +147,8 @@ SEEK::Application.routes.draw do
       get :select
       post :make_friendship_request
       delete :remove_friendship
+      post :accept_friendship_request
+
     end
     resources :projects,:institutions,:assays,:studies,:investigations,:models,:sops,:data_files,:presentations,:publications,:events,:only=>[:index]
     resources :avatars do

@@ -73,11 +73,6 @@ class PeopleController < ApplicationController
   # GET /people/1
   # GET /people/1.xml
   def show
-    @friendship_status = Friendship.friendship_status(current_user.id, params[:id])
-    if current_user.person.is_friends_with?(params[:id])
-      status = 2
-    elsif @person.pending_friend_requests_made
-    end
     respond_to do |format|
       format.html # show.html.erb
       format.rdf { render :template=>'rdf/show'}
@@ -88,7 +83,15 @@ class PeopleController < ApplicationController
   def remove_friendship
     friendship = Friendship.where(:person_id => current_user.person.id, :friend_id => params[:id])
     Friendship.delete(friendship)
+    respond_to do |format|
+      format.html { redirect_to(Person.find(params[:id]))}
+    end
+  end
 
+  def accept_friendship_request
+    friendship = Friendship.where(:person_id => params[:id], :friend_id => current_user.person.id).first
+    friendship.accept_request
+    flash[:notice] = 'You are now friends with this person'
     respond_to do |format|
       format.html { redirect_to(Person.find(params[:id]))}
     end
@@ -100,7 +103,7 @@ class PeopleController < ApplicationController
     new_request.friend_id = params[:id]
     new_request.status = 1
     new_request.save!
-
+    flash[:notice] = "A friend request has been sent"
     respond_to do |format|
       format.html { redirect_to(Person.find(params[:id]))}
     end

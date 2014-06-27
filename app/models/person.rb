@@ -110,29 +110,29 @@ class Person < ActiveRecord::Base
     if !self.friends.nil?
       self.friends.include?(Person.find(friend_id))
     end
-
   end
-
 
   def is_awaiting_friendship_response?(friend_id)
     pending_friend_requests_made.include?(Person.find_by_id(friend_id))
   end
 
+  def has_friend_request_from?(friend_id)
+    pending_friend_requests_received.include?(Person.find_by_id(friend_id))
+  end
 
   def pending_friend_requests_made()
     Friendship.where(:person_id => self.id, :status => 1).collect{|friendship| friendship.friend}
   end
 
-
   def pending_friend_requests_received()
-    Friendship.where(:friend_id => self.id, :status => 1)
+    Friendship.where(:friend_id => self.id, :status => 1).collect{|friendship| friendship.person}
   end
 
-  def friends()
+  def friends
     friends = []
     #friends = Friendship.where(:friend => 2, :status => 2).collect{|friendship| friendship.person} + Friendship.where(:person_id => 1, :status => 2).collect{|friendship| friendship.person}
     friends = Friendship.where(:friend_id => self.id, :status => 2).collect{|friendship| friendship.person} + Friendship.where(:person_id => self.id, :status => 2).collect{|friendship| friendship.friend}
-    return friends.flatten.uniq.delete(self)
+    return friends.flatten.uniq
   end
 
   def studies
