@@ -25,6 +25,7 @@
           <tr>
             <td><%= link_to(friend.name, friend) %></td>
             <td><%= image_tag_for_key('user-invite', accept_friendship_request_person_path(friend), nil, {:method=>:post}, "Accept Friendship") -%></td>
+            <td><%= image_tag_for_key('user-delete', remove_friendship_person_path(friend), nil, {:method=>:delete}, "Reject Friendship") -%></td>
           </tr>
       <% end %>
       <% friends_requested.each do |friend| %>
