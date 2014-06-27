@@ -1,0 +1,12 @@
+<% if logged_in_and_registered? && !mine?(@person) %>
+    <% if current_user.person.is_friends_with?(@person.id) %>
+        <li><%= image_tag_for_key('user-delete', remove_friendship_person_path(@person), nil, {:method=>:delete}, "Unfriend") -%></li>
+    <% elsif current_user.person.is_awaiting_friendship_response?(@person.id) %>
+        <li><%= image_tag_for_key('user-delete', remove_friendship_person_path(@person), nil, {:method=>:delete}, "Cancel Friendship Request") -%></li>
+    <% elsif current_user.person.has_friend_request_from?(@person.id) %>
+        <li><%= image_tag_for_key('user-invite', accept_friendship_request_person_path(@person), nil, {:method=>:post}, "Accept Friendship Request") -%></li>
+        <li><%= image_tag_for_key('user-delete', remove_friendship_person_path(@person), nil, {:method=>:delete}, "Reject Friendship Request") -%></li>
+    <% else %>
+        <li><%= image_tag_for_key('user-invite', make_friendship_request_person_path(@person), nil, {:method=>:post}, "Request Friendship") -%></li>
+    <% end %>
+<% end %>

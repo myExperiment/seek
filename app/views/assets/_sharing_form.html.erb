@@ -272,6 +272,46 @@
               </div>
             </div>
 
+            <!-- Friends -->
+            <% if Seek::Config.friends_enabled %>
+              <div class="fold" style="width: 70%; margin: 0.6em 0;">
+
+                <div class="foldTitle">
+                  <%= help_icon("Here you can specify individual people to share this #{@resource_type} with.") -%>
+                  Friends
+                </div>
+
+              <div class="foldContent" style="display: none; background-color: #F2F2F2; padding-bottom: 1.3em;">
+                <div id="facebook" class="clearfix">
+
+                  <p style="text-align: justify;">
+                    Select friends you wish to add sharing privileges to this <%= @resource_type -%>.
+
+                  </p>
+
+                  <table>
+                    <% current_user.person.friends.each do |friend| %>
+                    <tr>
+                      <td class="box_editing_inner">
+
+
+                        <div id="friend_name" value="friend_name"><%= friend.name %></div>
+                        <select name="friend_access_type_select" id="friend_access_type_select" style="width: 344px; vertical-align: middle; margin-top: 0.3em;">
+                          <%= policy_selection_options nil, @resource -%>
+                        </select>
+                      </td>
+
+                      <td style="padding-left: 0.7em; vertical-align: middle;">
+                        <span style="font-weight: bold;"><%= link_to "Add", "", :onclick => "javascript: addFriend('#{friend.id}', '#{friend.name}'); return(false);" -%></span>
+                      </td>
+                    </tr>
+                    <% end %>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <% end %>
+
             <!-- individual people -->
             <div class="fold" style="width: 70%; margin: 0.6em 0;">
 

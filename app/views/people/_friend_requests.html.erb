@@ -1,0 +1,38 @@
+<table>
+  <% accepted_friends = current_user.person.friends %>
+  <% unless accepted_friends.empty? %>
+      <tr>
+        <td style="text-align:left"><b>Friends:</b></td>
+        <td></td>
+      </tr>
+      <% accepted_friends.each do |friend| %>
+          <tr>
+            <td><%= link_to(friend.name, friend) %></td>
+            <td><%= image_tag_for_key('user-delete', remove_friendship_person_path(friend), nil, {:method=>:delete}, "Unfriend") -%></td>
+          </tr>
+      <% end %>
+  <% end %>
+
+  <% pending_friends = current_user.person.pending_friend_requests_received %>
+  <% friends_requested = current_user.person.pending_friend_requests_made %>
+
+  <% unless pending_friends.empty? && friends_requested.empty? %>
+      <tr>
+        <td style="text-align:left"><b>Pending Friend Requests:</b></td>
+        <td></td>
+      </tr>
+      <% pending_friends.each do |friend| %>
+          <tr>
+            <td><%= link_to(friend.name, friend) %></td>
+            <td><%= image_tag_for_key('user-invite', accept_friendship_request_person_path(friend), nil, {:method=>:post}, "Accept Friendship") -%></td>
+            <td><%= image_tag_for_key('user-delete', remove_friendship_person_path(friend), nil, {:method=>:delete}, "Reject Friendship") -%></td>
+          </tr>
+      <% end %>
+      <% friends_requested.each do |friend| %>
+          <tr>
+            <td><%= link_to(friend.name, friend) %></td>
+            <td><%= image_tag_for_key('user-delete', remove_friendship_person_path(friend), nil, {:method=>:delete}, "Cancel Friendship Request") -%></td>
+          </tr>
+      <% end %>
+  <% end %>
+</table>

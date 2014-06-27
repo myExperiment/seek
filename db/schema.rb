@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140624130328) do
+ActiveRecord::Schema.define(:version => 20140626130847) do
 
   create_table "activity_logs", :force => true do |t|
     t.string   "action"
@@ -516,6 +516,16 @@ ActiveRecord::Schema.define(:version => 20140624130328) do
     t.integer "position"
     t.text    "description_html"
   end
+
+  create_table "friendships", :force => true do |t|
+    t.integer  "person_id"
+    t.integer  "friend_id"
+    t.integer  "status"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "friendships", ["person_id"], :name => "index_friendships_on_person_id"
 
   create_table "genes", :force => true do |t|
     t.string   "title"

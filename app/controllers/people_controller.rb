@@ -74,13 +74,48 @@ class PeopleController < ApplicationController
 
   # GET /people/1
   # GET /people/1.xml
-  def show                
+  def show
     respond_to do |format|
       format.html # show.html.erb
       format.rdf { render :template=>'rdf/show'}
       format.xml
     end
   end
+
+  def remove_friendship
+    friendship = Friendship.where(:person_id => current_user.person.id, :friend_id => params[:id]) + Friendship.where(:person_id => params[:id], :friend_id => current_user.person.id)
+    if friendship.first.status == 2
+      flash[:notice] = "You are no longer friends with this person."
+    else
+      flash[:notice] = "This friendship request has been removed."
+    end
+    Friendship.delete(friendship)
+    respond_to do |format|
+      format.html { redirect_to(:back)}
+    end
+  end
+
+  def accept_friendship_request
+    friendship = Friendship.where(:person_id => params[:id], :friend_id => current_user.person.id).first
+    friendship.accept_request
+    flash[:notice] = "You are now friends with #{Person.find_by_id(params[:id]).name}"
+    respond_to do |format|
+      format.html { redirect_to(:back)}
+    end
+  end
+
+  def make_friendship_request
+    new_request = Friendship.new
+    new_request.person = @current_user.person
+    new_request.friend_id = params[:id]
+    new_request.status = 1
+    new_request.save!
+    flash[:notice] = "A friend request has been sent to #{Person.find_by_id(params[:id]).name}"
+    respond_to do |format|
+      format.html { redirect_to(Person.find(params[:id]))}
+    end
+  end
+
 
   # GET /people/new
   # GET /people/new.xml
@@ -336,6 +371,7 @@ class PeopleController < ApplicationController
     end
   end
 
+<<<<<<< HEAD
   def network_memberships
     @memberships = @person.network_memberships.accepted.joins(:network)
 
@@ -343,6 +379,8 @@ class PeopleController < ApplicationController
       format.html
     end
   end
+=======
+>>>>>>> friends
 
   private
   
