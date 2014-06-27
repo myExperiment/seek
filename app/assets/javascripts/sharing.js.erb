@@ -825,6 +825,17 @@ function addIndividualPeople() {
     }
 }
 
+function addNetwork() {
+    var networkElement = $('network');
+    var networkOption = networkElement.options[networkElement.selectedIndex];
+    var networkAccessElement = $('network_access_type_select');
+    var access_type = parseInt(networkAccessElement.options[networkAccessElement.selectedIndex].value);
+
+    addContributor('Network', networkOption.text, networkOption.value, access_type);
+
+    return(true);
+}
+
 
 // ***************  Whitelist / Blacklist  *****************
 

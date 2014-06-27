@@ -337,6 +337,47 @@
               </div>
             </div>
 
+            <!-- networks -->
+            <% if Seek::Config.networks_enabled %>
+              <div class="fold" style="width: 70%; margin: 0.6em 0;">
+
+                <div class="foldTitle">
+                  <%= help_icon("Here you can specify #{t('network').pluralize} to share this #{@resource_type} with.") -%>
+                  <%= t('network').pluralize -%>
+                </div>
+
+                <div class="foldContent" style="display: none; background-color: #F2F2F2; padding-bottom: 1.3em;">
+                  <div id="facebook" class="clearfix">
+
+                    <p style="text-align: justify;">
+                      Please type names of people to share this <%= @resource_type -%> with into the box below -
+                      suggestions will be displayed as you type.
+                      Select access rights from drop-down menu; these will be applied to all chosen people.
+                      Clicking "Add" will add selected people to the list.
+                    </p>
+
+                    <table>
+                      <tr>
+                        <td class="box_editing_inner">
+
+                          <%= select_tag('network', options_for_select(current_user.person.related_networks.map {|n| [n.title, n.id]}), :style => 'width: 344px; vertical-align: middle; margin-top: 0.3em;') -%><br/>
+
+                          <select name="network_access_type_select" id="network_access_type_select" style="width: 344px; vertical-align: middle; margin-top: 0.3em;">
+                            <%= policy_selection_options nil, @resource -%>
+                          </select>
+                        </td>
+
+                        <td style="padding-left: 0.7em; vertical-align: middle;">
+                          <span style="font-weight: bold;"><%= link_to "Add", "", :onclick => "javascript: addNetwork(); return(false);" -%></span>
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+              </div>
+          <% end %>
+          <!-- end networks -->
+
           </div>
         </div>
         <br/>
@@ -365,7 +406,7 @@
 <% if show_advanced_permissions -%>
     <% @policy.permissions.each do |p| -%>
       <% unless p.marked_for_destruction? %>
-          <% case p.contributor_type; when "FavouriteGroup", "Person", "Project", "Institution", "WorkGroup" -%>
+          <% case p.contributor_type; when "FavouriteGroup", "Person", "Project", "Institution", "WorkGroup", "Network" -%>
             <% unless p.contributor_type == "FavouriteGroup" && [FavouriteGroup::WHITELIST_NAME, FavouriteGroup::BLACKLIST_NAME].include?(p.contributor.name) -%>
                 if('<%= p.contributor_type -%>' in permissions_for_set)
                 permissions_for_set['<%= p.contributor_type -%>']++;

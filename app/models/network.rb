@@ -19,6 +19,10 @@ class Network < ActiveRecord::Base
     members + [owner]
   end
 
+  def people
+    related_people
+  end
+
   def member?(person)
     !person.nil? && (admin?(person) || members.include?(person.is_a?(Person) ? person : person.person))
   end
