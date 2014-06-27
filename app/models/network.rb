@@ -35,4 +35,11 @@ class Network < ActiveRecord::Base
     !person.nil? && (owner == (person.is_a?(Person) ? person : person.person))
   end
 
+  Seek::Util.authorized_types.each do |type|
+    define_method "related_#{type.name.underscore.pluralize}" do
+      type.joins(:policy => :permissions).where(:permissions => {:contributor_id => self.id, :contributor_type => 'Network'})
+    end
+  end
+
+
 end
