@@ -45,11 +45,12 @@
           </li>
       <% end %>
   <% end %>
+
+  <% if Seek::Config.friends_enabled %>
+      <li><%= render :partial => "friendship_options" %></li>
+  <% end %>
 </ul>
 
-<% if Seek::Config.friends_enabled %>
-    <%= render :partial => "friendship_options" %>
-<% end %>
 
 
 <div class="show_basic">
