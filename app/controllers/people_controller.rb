@@ -81,7 +81,7 @@ class PeopleController < ApplicationController
   end
 
   def remove_friendship
-    friendship = Friendship.where(:person_id => current_user.person.id, :friend_id => params[:id])
+    friendship = Friendship.where(:person_id => current_user.person.id, :friend_id => params[:id]) + Friendship.where(:person_id => params[:id], :friend_id => current_user.person.id)
     Friendship.delete(friendship)
     respond_to do |format|
       format.html { redirect_to(Person.find(params[:id]))}
