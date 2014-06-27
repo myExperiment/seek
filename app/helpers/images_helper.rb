@@ -113,6 +113,8 @@ module ImagesHelper
       "famfamfam_silk/user.png"
       when "user-invite"
       "famfamfam_silk/user_add.png"
+      when "user-delete"
+      "famfamfam_silk/user_delete.png"
       when "avatar"
       "famfamfam_silk/picture.png"
       when "avatars"
