@@ -25,7 +25,7 @@ class ApplicationController < ActionController::Base
 
   before_filter :profile_for_login_required
 
-  before_filter :project_membership_required,:only=>[:create,:new]
+  before_filter :project_membership_required,:only=>[:create,:new] unless Seek::Config.projectless_assets_allowed
 
   before_filter :restrict_guest_user, :only => [:new, :edit, :batch_publishing_preview]
   helper :all

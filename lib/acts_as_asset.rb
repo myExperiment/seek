@@ -39,7 +39,7 @@ module Acts #:nodoc:
         does_not_require_can_edit :last_used_at
 
         validates_presence_of :title
-        validates_presence_of :projects
+        validates_presence_of :projects unless Seek::Config.projectless_assets_allowed
 
         has_many :relationships,
                  :class_name => 'Relationship',

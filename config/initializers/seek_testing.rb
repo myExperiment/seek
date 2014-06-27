@@ -30,6 +30,7 @@ SEEK::Application.configure do
       Settings.defaults[:biosamples_enabled] = true
       Settings.defaults[:organisms_enabled] = true
       Settings.defaults[:treatments_enabled] = true
+      Settings.defaults[:projectless_assets_allowed] = false
 
       Settings.defaults[:project_link] = 'http://www.sysmo.net'
       Settings.defaults[:application_name] = 'SEEK'

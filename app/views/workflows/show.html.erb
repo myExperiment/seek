@@ -2,7 +2,9 @@
 
 <div class="breadcrumbs">
   <a href="/">Home</a> &gt;
-  <%= link_to @workflow.category.name, main_app.workflows_path(:category_id => @workflow.category) -%> &gt;
+  <% unless @workflow.category.nil? %>
+    <%= link_to @workflow.category.name, main_app.workflows_path(:category_id => @workflow.category) -%> &gt;
+  <% end %>
   <%= @display_workflow.title -%>
 </div>
 
@@ -82,12 +84,12 @@
 
   <!-- Interactions -->
   <% interactions = processors.select { |proc| proc.type == 'interaction' } || [] %>
-  <div class="fold">
-    <div class="foldTitle">
-      Interactions (<%= interactions.count -%>)
-    </div>
-    <div class="foldContent" style="display: none;">
-      <% unless interactions.blank? -%>
+  <% unless interactions.blank? -%>
+    <div class="fold">
+      <div class="foldTitle">
+        Interactions (<%= interactions.count -%>)
+      </div>
+      <div class="foldContent" style="display: none;">
           <table class="simple" style="width: 100%;">
             <% interactions.each do |b| -%>
                 <tr>
@@ -103,20 +105,18 @@
                 </tr>
             <% end %>
           </table>
-      <% else %>
-          <p class="none_text">None</p>
-      <% end %>
+      </div>
     </div>
-  </div>
+  <% end %>
 
   <!-- R Scripts -->
   <% rscripts = processors.select { |proc| proc.type=='rshell' } || [] %>
-  <div class="fold">
-    <div class="foldTitle">
-      R Scripts (<%= rscripts.count -%>)
-    </div>
-    <div class="foldContent" style="display: none;">
-      <% unless rscripts.blank? -%>
+  <% unless rscripts.blank? -%>
+    <div class="fold">
+      <div class="foldTitle">
+        R Scripts (<%= rscripts.count -%>)
+      </div>
+      <div class="foldContent" style="display: none;">
           <table class="simple" style="width: 100%;">
             <% rscripts.each do |b| -%>
                 <tr>
@@ -138,11 +138,9 @@
                 </tr>
             <% end %>
           </table>
-      <% else %>
-          <p class="none_text">None</p>
-      <% end %>
+      </div>
     </div>
-  </div>
+  <% end %>
 
   <div class="fold">
     <div class="foldTitle">
@@ -152,8 +150,10 @@
       <div class="box_about_actor">
         <%= render :partial => 'fileinfo', :object => @display_workflow.content_blob -%>
         <p>
-          <b>Category:</b>
-          <%= @workflow.category.name.html_safe -%>
+          <% unless @workflow.category.nil? %>
+            <b>Category:</b>
+            <%= @workflow.category.name.html_safe -%>
+          <% end %>
         </p>
 
         <!-- Workflow creators -->
