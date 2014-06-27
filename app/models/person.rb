@@ -156,6 +156,9 @@ class Person < ActiveRecord::Base
     end
   end
 
+  def related_networks
+    networks + owned_networks
+  end
 
   def self.userless_people
     p=Person.all

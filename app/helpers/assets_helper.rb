@@ -153,7 +153,7 @@ module AssetsHelper
 
     #Limit items viewable, and put the excess count in extra_count
     related.each_key do |key|
-      if limit && related[key][:items].size > limit && ["Project", "Investigation", "Study", "Assay", "Person", "Specimen", "Sample", "Run", "Workflow", "Sweep"].include?(resource.class.name)
+      if limit && related[key][:items].size > limit && ["Project", "Investigation", "Study", "Assay", "Person", "Specimen", "Sample", "Run", "Workflow", "Sweep", "Network"].include?(resource.class.name)
         related[key][:extra_count] = related[key][:items].size - limit
         related[key][:items] = related[key][:items][0...limit]
       end
@@ -174,7 +174,7 @@ module AssetsHelper
       res[:items].compact!
       unless res[:items].empty?
         total_count = res[:items].size
-        if key == 'Project' || key == 'Institution'
+        if key == 'Project' || key == 'Institution' || key == 'Network'
           res[:hidden_count] = 0
         elsif key == 'Person'
           if Seek::Config.is_virtualliver && User.current_user.nil?
@@ -196,7 +196,7 @@ module AssetsHelper
   def collect_related_items(resource)
     related = {"Person" => {}, "Project" => {}, "Institution" => {}, "Investigation" => {},
                "Study" => {}, "Assay" => {}, "Specimen" => {}, "Sample" => {}, "DataFile" => {}, "Model" => {}, "Sop" => {}, "Publication" => {}, "Presentation" => {}, "Event" => {},
-               "Workflow" => {}, "TavernaPlayer::Run" => {}, "Sweep" => {}, "Strain" => {}
+               "Workflow" => {}, "TavernaPlayer::Run" => {}, "Sweep" => {}, "Strain" => {}, "Network" => {}
     }
 
     related.each_key do |key|
