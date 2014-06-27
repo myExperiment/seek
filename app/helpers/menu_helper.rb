@@ -10,7 +10,8 @@ module MenuHelper
             {:controller=>"programmes",:title=>t('programme').pluralize,:hide=>!Seek::Config.programmes_enabled},
             {:controller=>"people",:title=>"People"},
             {:controller=>"projects",:title=>t("project").pluralize},
-            {:controller=>"institutions",:title=>"Institutions"}
+            {:controller=>"institutions",:title=>"Institutions"},
+            {:controller=>"networks",:title=>t('network').pluralize,:hide=>!Seek::Config.networks_enabled}
         ]},
 
         {:title=>t("menu.isa"),:sections=>[
