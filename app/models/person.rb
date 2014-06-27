@@ -214,7 +214,7 @@ class Person < ActiveRecord::Base
   end
 
   def can_create_new_items?
-    member?
+    member? || Seek::Config.projectless_assets_allowed
   end
 
   def workflows
