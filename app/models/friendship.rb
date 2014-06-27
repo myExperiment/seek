@@ -17,29 +17,9 @@ class Friendship < ActiveRecord::Base
     self.update_attribute(:status, 2)
   end
 
-  def friendship_status_text
-    FRIENDSHIP_STATUSES[self.status]
-  end
-
   def self.friendship_status(person_id, friend_id)
     Friendship.where(:person_id => person_id, :friend_id => friend_id).first.try(:status) ||
         Friendship.where(:person_id => friend_id, :friend_id => person_id).first.try(:status) || 0
-  end
-
-  def self.status_text(person_id, friend_id)
-    FRIENDSHIP_STATUSES[friendship_status(person_id, friend_id)]
-  end
-
-  def friends?(person_id, friend_id)
-    FRIENDSHIP_STATUSES[friendship_status(person_id, friend_id)] == 'Accepted'
-  end
-
-  def pending_friends?(person_id, friend_id)
-    FRIENDSHIP_STATUSES[friendship_status(person_id, friend_id)] == 'Pending'
-  end
-
-  def not_friends?(person_id, friend_id)
-    FRIENDSHIP_STATUSES[friendship_status(person_id, friend_id)] == 'None'
   end
 
   private

@@ -120,17 +120,16 @@ class Person < ActiveRecord::Base
     pending_friend_requests_received.include?(Person.find_by_id(friend_id))
   end
 
-  def pending_friend_requests_made()
+  def pending_friend_requests_made
     Friendship.where(:person_id => self.id, :status => 1).collect{|friendship| friendship.friend}
   end
 
-  def pending_friend_requests_received()
+  def pending_friend_requests_received
     Friendship.where(:friend_id => self.id, :status => 1).collect{|friendship| friendship.person}
   end
 
   def friends
     friends = []
-    #friends = Friendship.where(:friend => 2, :status => 2).collect{|friendship| friendship.person} + Friendship.where(:person_id => 1, :status => 2).collect{|friendship| friendship.person}
     friends = Friendship.where(:friend_id => self.id, :status => 2).collect{|friendship| friendship.person} + Friendship.where(:person_id => self.id, :status => 2).collect{|friendship| friendship.friend}
     return friends.flatten.uniq
   end
