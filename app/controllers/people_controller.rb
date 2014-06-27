@@ -371,7 +371,6 @@ class PeopleController < ApplicationController
     end
   end
 
-<<<<<<< HEAD
   def network_memberships
     @memberships = @person.network_memberships.accepted.joins(:network)
 
@@ -379,8 +378,6 @@ class PeopleController < ApplicationController
       format.html
     end
   end
-=======
->>>>>>> friends
 
   private
   
